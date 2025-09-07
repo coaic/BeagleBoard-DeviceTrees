@@ -1,0 +1,28 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "ti,beaglebone", "ti,am33xx";
+};
+
+/* Optional marker so you can see it in /proc/device-tree/chosen/overlays */
+&{/chosen} {
+    overlays {
+        BB-WIRE-TRIMMED-00B9 = "loaded";
+    };
+};
+
+&spi0 {
+    status = "okay";
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    /* child that spidev's OF match table accepts */
+    dh2228fv@0 {
+        compatible = "rohm,dh2228fv";
+        reg = <0>;                         /* CS0 */
+        spi-max-frequency = <16000000>;
+        status = "okay";
+    };
+};
+
