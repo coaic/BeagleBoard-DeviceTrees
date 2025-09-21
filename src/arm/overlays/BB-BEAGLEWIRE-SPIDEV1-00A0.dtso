@@ -80,26 +80,24 @@
 };
 
 /* === BeagleWire control GPIOs (adds two named lines; SPI part unchanged) === */
-/*
-&ocp {
-    beaglewire-gpio-helper {
-        compatible = "gpio-of-helper";
-        status = "okay";
-
-        /* CRESET_B: P8_12 -> gpio1_12, output, active-low */
-        beaglewire-cresetb {
-            gpio-name = "beaglewire_cresetb";
-            gpio = <&gpio1 12 GPIO_ACTIVE_LOW>;
-            output;
-            init-low;   /* hold reset until userspace releases */
-        };
-
-        /* CDONE: P8_11 -> gpio1_13, input, active-high */
-        beaglewire-cdone {
-            gpio-name = "beaglewire_cdone";
-            gpio = <&gpio1 13 GPIO_ACTIVE_HIGH>;
-            input;
-        };
-    };
-};
-*/
+//&ocp {
+//    beaglewire-gpio-helper {
+//        compatible = "gpio-of-helper";
+//        status = "okay";
+//
+//        /* CRESET_B: P8_12 -> gpio1_12, output, active-low */
+//        beaglewire-cresetb {
+//            gpio-name = "beaglewire_cresetb";
+//            gpio = <&gpio1 12 GPIO_ACTIVE_LOW>;
+//            output;
+//            init-low;   /* hold reset until userspace releases */
+//        };
+//
+//        /* CDONE: P8_11 -> gpio1_13, input, active-high */
+//        beaglewire-cdone {
+//            gpio-name = "beaglewire_cdone";
+//            gpio = <&gpio1 13 GPIO_ACTIVE_HIGH>;
+//            input;
+//        };
+//    };
+//};
