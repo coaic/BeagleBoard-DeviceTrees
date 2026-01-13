@@ -152,7 +152,7 @@
 	};
 
 	chosen {
-		stdout-path = &uart0;
+		stdout-path = "serial0:115200n8";
 	};
 
 	leds {
@@ -377,7 +377,6 @@
 	pinctrl-0 = <&uart0_pins>;
 
 	status = "okay";
-	symlink = "bone/uart/0";
 };
 
 &usb0 {

@@ -133,35 +133,9 @@
 			slew-rate = <0>;
 		};
 	};
-
-	mikrobus_rst_pins: mikrobus-rst-0 {
-		rst-pins {
-			pins = "AUDIO_PA3"; /* GPIO4_3 */
-			function = "gpio";
-			bias-disable;
-			drive-strength = <3>;
-			output-high;
-			input-disable;
-			input-schmitt-disable;
-			slew-rate = <0>;
-		};
-	};
 };
 
 &padctrl0_apsys {
-	i2c2_pins: i2c2-0 {
-		i2c-pins {
-			pins = "I2C2_SDA",
-				   "I2C2_SCL";
-			function = "i2c";
-			bias-pull-up = <48000>;
-			drive-strength = <7>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-
 	gmac0_pins: gmac0-0 {
 		tx-pins {
 			pins = "GMAC0_TX_CLK",
@@ -233,53 +207,6 @@
 		};
 	};
 
-	mikrobus_gpio_pins: mikrobus-gpio-0 {
-		pwm-pins {
-			pins = "QSPI0_SSN1"; /* PWM2 */
-			function = "gpio";
-			bias-disable;
-			drive-strength = <3>;
-			input-disable;
-			input-schmitt-disable;
-			slew-rate = <0>;
-		};
-
-		int-pins {
-			pins = "GPIO2_21";
-			function = "gpio";
-			bias-pull-up;
-			drive-strength = <1>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-
-	mikrobus_spi_pins: spi0-0 {
-		spi-pins {
-			pins = "SPI_SCLK",
-				   "SPI_MISO",
-				   "SPI_MOSI";
-			function = "spi";
-			bias-disable;
-			drive-strength = <7>;
-			input-enable; /* For MISO */
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-
-		cs-pins {
-			pins = "GPIO2_20"; /* CS pin */
-			function = "gpio";
-			bias-disable;
-			drive-strength = <7>;
-			output-high; /* CS is active low, so default high */
-			input-disable;
-			input-schmitt-disable;
-			slew-rate = <0>;
-		};
-	};
-
 	uart0_pins: uart0-0 {
 		tx-pins {
 			pins = "UART0_TXD";
@@ -301,21 +228,6 @@
 			slew-rate = <0>;
 		};
 	};
-
-	wifi_pins: wifi-pins {
-		wifi-host-wake {
-			pins = "SDIO1_DETN";
-			bias-pull-up;
-			input-enable;
-		};
-
-		wifi-reset {
-			pins = "GPIO2_31";
-			bias-pull-up;
-			drive-strength = <8>;
-			output-high;
-		};
-	};
 };
 
 &sdio0 {
@@ -324,138 +236,8 @@
 	status = "okay";
 };
 
-&padctrl1_apsys {
-	i2c0_pins: i2c0-0 {
-		i2c-pins {
-			pins = "I2C0_SDA",
-				   "I2C0_SCL";
-			function = "i2c";
-			bias-pull-up = <48000>;
-			drive-strength = <7>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-
-	mikrobus_i2c_pins: i2c4-0 {
-		i2c-pins {
-			pins = "GPIO0_19", /* I2C4_SDA */
-				   "GPIO0_18"; /* I2C4_SCL */
-			function = "i2c";
-			bias-pull-up = <48000>;
-			drive-strength = <7>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-
-	i2c5_pins: i2c5-0 {
-		i2c-pins {
-			pins = "QSPI1_D0_MOSI", /* I2C5_SDA */
-				   "QSPI1_CSN0";    /* I2C5_SCL */
-			function = "i2c";
-			bias-pull-up = <48000>;
-			drive-strength = <7>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-
-	mikrobus_uart_pins: uart3-0 {
-		tx-pins {
-			pins = "CHIP_DBG_TXD"; /* UART3_TXD */
-			function = "uart";
-			bias-disable;
-			drive-strength = <3>;
-			input-disable;
-			input-schmitt-disable;
-			slew-rate = <0>;
-		};
-
-		rx-pins {
-			pins = "CHIP_DBG_RXD"; /* UART3_RXD */
-			function = "uart";
-			bias-pull-up;
-			drive-strength = <1>;
-			input-enable;
-			input-schmitt-enable;
-			slew-rate = <0>;
-		};
-	};
-};
-
-&sdio1 {
-	bus-width = <4>;
-	max-frequency = <198000000>;
-	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&wifi_pins>;
-
-	#address-cells = <1>;
-	#size-cells = <0>;
-
-	brcmf: wifi@1 {
-		status = "okay";
-		compatible = "brcm,bcm43456-fmac", "brcm,bcm4329-fmac";
-		reg = <1>;
-		interrupt-parent = <&gpio2>;
-		interrupts = <29 IRQ_TYPE_EDGE_FALLING>;
-		interrupt-names = "host-wake";
-		reset-gpios = <&gpio2 31 GPIO_ACTIVE_LOW>;
-		brcm,ccode-map = "JP-JP-78", "US-Q2-86";
-	};
-};
-
 &uart0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart0_pins>;
-	status = "okay";
-};
-
-&uart3 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&mikrobus_uart_pins>;
-	status = "okay";
-};
-
-&i2c0 {
-	clock-frequency = <100000>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&i2c0_pins>;
-	status = "okay";
-
-	eeprom@50 {
-		compatible = "atmel,24c32";
-		reg = <0x50>;
-	};
-};
-
-&i2c2 {
-	clock-frequency = <100000>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&i2c2_pins>;
-	status = "okay";
-};
-
-&i2c4 {
-	clock-frequency = <100000>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&mikrobus_i2c_pins>;
-	status = "okay";
-};
-
-&i2c5 {
-	clock-frequency = <100000>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&i2c5_pins>;
-	status = "okay";
-};
-
-&spi0 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&mikrobus_spi_pins>;
 	status = "okay";
 };
