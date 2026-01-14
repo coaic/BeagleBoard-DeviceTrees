@@ -14,36 +14,23 @@
 
             spi1_pins: pinmux_spi1_pins {
                 pinctrl-single,pins = <
-                    0x190 0x33  /* P9_31 mcasp0_aclkx  SPI1_SCLK  */
-                    0x194 0x33  /* P9_29 mcasp0_fsx    SPI1_MISO  */
-                    0x198 0x33  /* P9_30 mcasp0_axr0   SPI1_MOSI  */
-                    0x19c 0x13  /* P9_28 mcasp0_ahclkr SPI1_CS0   */
+                    0x190 0x33  /* P9_31 mcasp0_aclkx  SPI1_SCLK */
+                    0x194 0x33  /* P9_29 mcasp0_fsx    SPI1_MISO */
+                    0x198 0x33  /* P9_30 mcasp0_axr0   SPI1_MOSI */
+                    0x19c 0x13  /* P9_28 mcasp0_ahclkr SPI1_CS0  */
                 >;
             };
 
             p9_25_gpio: pinmux_p9_25_gpio {
                 pinctrl-single,pins = <
-                    0x1ac 0x07  /* P9_25 mcasp0_ahclkx GPIO | out */
+                    0x1ac 0x07  /* P9_25 mcasp0_ahclkx GPIO output */
                 >;
             };
         };
     };
 
-    /* ---------- GPIO hog (P9_25 HIGH at boot) ---------- */
-    fragment@1 {
-        target = <&gpio3>;
-        __overlay__ {
-            p9_25_boot_high {
-                gpio-hog;
-                gpios = <21 GPIO_ACTIVE_HIGH>; /* gpio3_21 = P9_25 */
-                output-high;
-                line-name = "p9_25_boot_high";
-            };
-        };
-    };
-
     /* ---------- SPI1 controller ---------- */
-    fragment@2 {
+    fragment@1 {
         target = <&spi1>;
         __overlay__ {
             status = "okay";
