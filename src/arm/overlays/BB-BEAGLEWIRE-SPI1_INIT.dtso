@@ -48,4 +48,15 @@
             };
         };
     };
+    fragment@2 {
+        target = <&gpio3>;
+        __overlay__ {
+            flash_reset {
+                gpio-hog;
+                gpios = <21 GPIO_ACTIVE_HIGH>;
+                output-high;
+                line-name = "spi-flash-reset";
+            };
+        };
+    };
 };
