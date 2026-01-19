@@ -51,15 +51,14 @@
     fragment@2 {
         target = <&gpio3>;
         __overlay__ {
-            status = "okay";
-            pinctrl-names = "default";
-            pinctrl-0 = <&p9_25_gpio>;
-
             flash_reset {
                 gpio-hog;
                 gpios = <21 GPIO_ACTIVE_HIGH>;
                 output-high;
                 line-name = "spi-flash-reset";
+
+                pinctrl-names = "default";
+                pinctrl-0 = <&p9_25_gpio>;
             };
         };
     };
