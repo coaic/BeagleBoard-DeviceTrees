@@ -1,0 +1,3 @@
+SUBSYSTEM=="spi", KERNEL=="spi2.0", \
+  ATTR{modalias}=="spi:spidev", \
+  RUN+="/bin/sh -c 'echo spidev > /sys/bus/spi/devices/%k/driver_override; echo %k > /sys/bus/spi/drivers/spidev/bind'"
