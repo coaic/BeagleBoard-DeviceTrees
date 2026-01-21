@@ -4,10 +4,6 @@
 
 #include <dt-bindings/gpio/gpio.h>
 
-// SPDX-License-Identifier: GPL-2.0-only
-/dts-v1/;
-/plugin/;
-
 / {
     compatible = "ti,beaglebone", "ti,beaglebone-black";
 
@@ -24,14 +20,27 @@
         };
     };
 
-    /* Expose raw spidev (no spi1, no pinmux) */
+    /* Bitbanged SPI master */
     fragment@1 {
         target-path = "/";
         __overlay__ {
-            bw_flash {
-                compatible = "spidev";
-                spi-max-frequency = <1000000>;
+            spi_gpio: spi-gpio {
+                compatible = "spi-gpio";
+                #address-cells = <1>;
+                #size-cells = <0>;
+
+                sck-gpios  = <&gpio3 14 GPIO_ACTIVE_HIGH>; /* P9_31 - SCLK */
+                mosi-gpios = <&gpio3 15 GPIO_ACTIVE_HIGH>; /* P9_29 - MOSI */
+                miso-gpios = <&gpio3 16 GPIO_ACTIVE_HIGH>; /* P9_30 - MISO */
+                cs-gpios   = <&gpio3 17 GPIO_ACTIVE_LOW>;  /* P9_28 - CS */
+
                 status = "okay";
+
+                spidev@0 {
+                    compatible = "spidev";
+                    reg = <0>;
+                    spi-max-frequency = <1000000>;
+                };
             };
         };
     };
