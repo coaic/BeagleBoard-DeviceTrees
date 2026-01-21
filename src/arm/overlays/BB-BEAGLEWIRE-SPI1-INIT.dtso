@@ -11,11 +11,11 @@
     fragment@0 {
         target = <&gpio3>;
         __overlay__ {
-            flash_reset {
+            ice40_creset {
                 gpio-hog;
                 gpios = <21 GPIO_ACTIVE_HIGH>; /* P9_25 */
-                output-high;
-                line-name = "spi-flash-reset";
+                output-low;                   /* HOLD FPGA IN RESET */
+                line-name = "ice40_creset";
             };
         };
     };
