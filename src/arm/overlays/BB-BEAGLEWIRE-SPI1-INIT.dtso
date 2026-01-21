@@ -7,7 +7,7 @@
 / {
     compatible = "ti,beaglebone", "ti,beaglebone-black";
 
-    /* Hold flash reset high */
+    /* Hold flash reset low */
     fragment@0 {
         target = <&gpio3>;
         __overlay__ {
