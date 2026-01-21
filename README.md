@@ -49,3 +49,30 @@ sudo make install_arm
 ```
 sudo make install_arm64
 ```
+
+# LLM Current Context
+
+Context summary (confirmed working state):
+
+Hardware:
+- Board: BeagleBone Black + BeagleWire
+- Flash: Macronix MX25L3273E (32 Mbit / 4 MiB)
+- Flash SPI bus shared with iCE40 FPGA
+
+Electrical:
+- FPGA CRESET on P9_25 (GPIO3_21) must be held LOW to tri-state SPI bus
+- SPI pins:
+  - SCK  = P9_31 (GPIO3_14)
+  - MISO = P9_29 (GPIO3_15)
+  - MOSI = P9_30 (GPIO3_16)
+  - CS#  = P9_28 (GPIO3_17)
+
+Software (known-good):
+- Kernel: 6.16.12-bone26
+- SPI master: spi-gpio
+- spidev bound via driver_override at boot
+- Stable speed: 500 kHz
+- Verified full read + verify with flashrom
+
+Working command:
+flashrom -p linux_spi:dev=/dev/spidev2.0,spispeed=500 -c MX25L3233F/MX25L3273E
