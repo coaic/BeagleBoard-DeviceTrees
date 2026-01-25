@@ -2,6 +2,8 @@
 /dts-v1/;
 /plugin/;
 
+#include <dt-bindings/gpio/gpio.h>
+
 / {
     fragment@0 {
         target = <&gpio2>;
