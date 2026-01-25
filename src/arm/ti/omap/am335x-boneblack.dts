@@ -178,15 +178,3 @@
 &baseboard_eeprom {
 	vcc-supply = <&ldo4_reg>;
 };
-
-&spi1 {
-	status = "okay";
-	#address-cells = <1>;
-	#size-cells = <0>;
-
-	spidev@0 {
-		compatible = "rohm,dh2228fv";
-		reg = <0>;
-		spi-max-frequency = <24000000>;
-	};
-};
