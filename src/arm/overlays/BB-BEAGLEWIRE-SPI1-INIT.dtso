@@ -2,58 +2,25 @@
 /dts-v1/;
 /plugin/;
 
-/ {
-	compatible = "ti,beaglebone", "ti,beaglebone-black";
-
-	/* Pinmux for McSPI1 on P9 */
-	fragment@0 {
-		target = <&am33xx_pinmux>;
-		__overlay__ {
-			mcspi1_pins: pinmux_mcspi1_pins {
-				pinctrl-single,pins = <
-					0x190 0x33  /* P9_31  mcasp0_aclkx  SPI1_SCLK */
-					0x194 0x33  /* P9_29  mcasp0_fsx    SPI1_MISO */
-					0x198 0x33  /* P9_30  mcasp0_axr0   SPI1_MOSI */
-					0x19c 0x13  /* P9_28  mcasp0_ahclkr SPI1_CS0 */
-				>;
-			};
-		};
+&am33xx_pinmux {
+	mcspi1_pins: pinmux_mcspi1_pins {
+		pinctrl-single,pins = <
+			0x190 0x33  /* P9_31 spi1_sclk */
+			0x194 0x33  /* P9_29 spi1_d0   */
+			0x198 0x33  /* P9_30 spi1_d1   */
+			0x19c 0x13  /* P9_28 spi1_cs0  */
+		>;
 	};
+};
 
-	/* Create McSPI1 controller (absent in base DTB) */
-    fragment@1 {
-        target-path = "/";
-        __overlay__ {
-            mcspi1: spi@481a0000 {
-                #address-cells = <1>;
-	            #size-cells = <0>;
+&spi1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&mcspi1_pins>;
 
-                compatible = "ti,omap2-mcspi";
-                reg = <0x0 0x481a0000 0x400>;
-
-                interrupt-parent = <&intc>;
-                interrupts = <125>;
-
-                clocks = <&l4ls_gclk>;
-                clock-names = "fck";
-
-                ti,spi-num-cs = <1>;
-
-                pinctrl-names = "default";
-                pinctrl-0 = <&mcspi1_pins>;
-
-                status = "okay";
-
-                spidev@0 {
-                    compatible = "linux,spidev";
-                    reg = <0>;
-                    spi-max-frequency = <24000000>;
-                };
-            };
-        };
-    };
-
-	__symbols__ {
-		spi1 = "/spi@481a0000";
+	spidev@0 {
+		compatible = "linux,spidev";
+		reg = <0>;
+		spi-max-frequency = <24000000>;
 	};
 };
