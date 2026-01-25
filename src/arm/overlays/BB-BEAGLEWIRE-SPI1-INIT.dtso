@@ -2,25 +2,16 @@
 /dts-v1/;
 /plugin/;
 
-&am33xx_pinmux {
-	mcspi1_pins: pinmux_mcspi1_pins {
-		pinctrl-single,pins = <
-			0x190 0x33  /* P9_31 spi1_sclk */
-			0x194 0x33  /* P9_29 spi1_d0   */
-			0x198 0x33  /* P9_30 spi1_d1   */
-			0x19c 0x13  /* P9_28 spi1_cs0  */
-		>;
-	};
-};
-
-&spi1 {
-	status = "okay";
-	pinctrl-names = "default";
-	pinctrl-0 = <&mcspi1_pins>;
-
-	spidev@0 {
-		compatible = "linux,spidev";
-		reg = <0>;
-		spi-max-frequency = <24000000>;
-	};
+/ {
+    fragment@0 {
+        target = <&gpio2>;
+        __overlay__ {
+            ice40_creset: ice40-creset {
+                gpio-hog;
+                gpios = <21 1>;      /* GPIO2_21, active-low */
+                output-low;          /* assert reset */
+                line-name = "ice40_creset";
+            };
+        };
+    };
 };
