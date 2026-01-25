@@ -24,10 +24,10 @@
                 #address-cells = <1>;
                 #size-cells = <0>;
 
-                sck-gpios  = <&gpio3 14 GPIO_ACTIVE_HIGH>; /* P9_31 - SCLK */
-                mosi-gpios = <&gpio3 15 GPIO_ACTIVE_HIGH>; /* P9_29 - MOSI */
-                miso-gpios = <&gpio3 16 GPIO_ACTIVE_HIGH>; /* P9_30 - MISO */
-                cs-gpios   = <&gpio3 17 GPIO_ACTIVE_LOW>;  /* P9_28 - CS */
+                sck-gpios  = <&gpio2 14 GPIO_ACTIVE_HIGH>; /* P9_31 - SCLK */
+                mosi-gpios = <&gpio2 15 GPIO_ACTIVE_HIGH>; /* P9_29 - MOSI */
+                miso-gpios = <&gpio2 16 GPIO_ACTIVE_HIGH>; /* P9_30 - MISO */
+                cs-gpios   = <&gpio2 17 GPIO_ACTIVE_LOW>;  /* P9_28 - CS */
 
                 status = "okay";
 
