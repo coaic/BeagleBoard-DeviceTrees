@@ -10,7 +10,7 @@
         __overlay__ {
             ice40_creset {
                 gpio-hog;
-                gpios = <21 GPIO_ACTIVE_HIGH>; /* P9_25 */
+                gpios = <$gpio3 21 GPIO_ACTIVE_HIGH>; /* P9_25 */
                 output-low;                   /* HOLD FPGA IN RESET */
                 line-name = "ice40_creset";
             };
