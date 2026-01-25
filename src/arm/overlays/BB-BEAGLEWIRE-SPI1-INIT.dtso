@@ -5,14 +5,6 @@
 / {
 	compatible = "ti,beaglebone", "ti,beaglebone-black";
 
-    fragment@99 {
-        target-path = "/";
-        __overlay__ {
-            #address-cells = <2>;
-            #size-cells = <1>;
-        };
-    };
-
 	/* Pinmux for McSPI1 on P9 */
 	fragment@0 {
 		target = <&am33xx_pinmux>;
