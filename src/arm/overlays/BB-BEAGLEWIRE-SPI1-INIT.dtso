@@ -37,11 +37,16 @@
             };
         };
     };
-
+   fragment@2 {
+        target = <&spi1>;
+        __overlay__ {
+            status = "disabled";
+        };
+    };
     /*
      * Bitbanged SPI master
      */
-    fragment@2 {
+    fragment@3 {
         target-path = "/";
         __overlay__ {
             spi_gpio: spi-gpio {
