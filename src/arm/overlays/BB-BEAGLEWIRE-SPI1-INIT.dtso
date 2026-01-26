@@ -6,10 +6,10 @@
 
 / {
     fragment@0 {
-        target = <&gpio2>;
+        target-path = "/";
         __overlay__ {
             ice40_creset {
-                gpios = <&gpio3 21 GPIO_ACTIVE_LOW>; /* P9_25 */
+                gpios = <&gpio2 21 GPIO_ACTIVE_LOW>; /* P9_25 */
                 line-name = "ice40_creset";
             };
         };
