@@ -37,8 +37,8 @@
             };
         };
     };
-   fragment@2 {
-        target = <&spi1>;
+    fragment@2 {
+        target = <&spi1_pins>;
         __overlay__ {
             status = "disabled";
         };
