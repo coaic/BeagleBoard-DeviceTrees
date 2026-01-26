@@ -6,7 +6,7 @@
 
 / {
     fragment@0 {
-        target = <&gpio3>;
+        target = <&gpio2>;
         __overlay__ {
             ice40_creset {
                 gpios = <&gpio3 21 GPIO_ACTIVE_LOW>; /* P9_25 */
