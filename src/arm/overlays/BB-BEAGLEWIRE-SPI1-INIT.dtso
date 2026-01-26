@@ -3,72 +3,38 @@
 /plugin/;
 
 #include <dt-bindings/gpio/gpio.h>
-#include <dt-bindings/pinctrl/am33xx.h>
 
 / {
     /*
-     * Reset line descriptor (NOT a hog)
-     * Userspace controls this via gpioset
+     * FPGA reset line (CRESET_B)
+     * No hog, no pinmux, userspace controls this
      */
     fragment@0 {
         target-path = "/";
         __overlay__ {
             ice40_creset {
-                gpios = <&gpio2 21 GPIO_ACTIVE_LOW>; /* P9_25, CRESET_B */
+                gpios = <&gpio2 21 GPIO_ACTIVE_LOW>; /* P9_25 */
                 line-name = "ice40_creset";
             };
         };
     };
 
     /*
-     * Pinmux: force SPI1 header pins into GPIO mode
-     * This is REQUIRED for spi-gpio to bind
+     * Use existing hardware SPI1 exactly as wired on BeagleWire
+     * Pins remain spi1_sclk / spi1_d0 / spi1_d1 / spi1_cs0
      */
     fragment@1 {
-        target = <&am33xx_pinmux>;
+        target = <&spi1>;
         __overlay__ {
-            spi_gpio_pins: pinmux_spi_gpio_pins {
-                pinctrl-single,pins = <
-                    0x190 (PIN_OUTPUT | MUX_MODE7) /* P9_31 gpio2_14 SCLK */
-                    0x194 (PIN_OUTPUT | MUX_MODE7) /* P9_29 gpio2_15 MOSI */
-                    0x198 (PIN_INPUT  | MUX_MODE7) /* P9_30 gpio2_16 MISO */
-                    0x19c (PIN_OUTPUT | MUX_MODE7) /* P9_28 gpio2_17 CS */
-                >;
-            };
-        };
-    };
-    fragment@2 {
-        target = <&spi1_pins>;
-        __overlay__ {
-            status = "disabled";
-        };
-    };
-    /*
-     * Bitbanged SPI master
-     */
-    fragment@3 {
-        target-path = "/";
-        __overlay__ {
-            spi_gpio: spi-gpio {
-                compatible = "spi-gpio";
-                pinctrl-names = "default";
-                pinctrl-0 = <&spi_gpio_pins>;
+            status = "okay";
 
-                #address-cells = <1>;
-                #size-cells = <0>;
+            #address-cells = <1>;
+            #size-cells = <0>;
 
-                sck-gpios  = <&gpio2 14 GPIO_ACTIVE_HIGH>;
-                mosi-gpios = <&gpio2 15 GPIO_ACTIVE_HIGH>;
-                miso-gpios = <&gpio2 16 GPIO_ACTIVE_HIGH>;
-                cs-gpios   = <&gpio2 17 GPIO_ACTIVE_LOW>;
-
-                status = "okay";
-
-                spidev@0 {
-                    compatible = "linux,spidev";
-                    reg = <0>;
-                    spi-max-frequency = <1000000>;
-                };
+            spidev@0 {
+                compatible = "rohm,dh2228fv";
+                reg = <0>;                    /* CS0 = P9_28 */
+                spi-max-frequency = <1000000>;
             };
         };
     };
