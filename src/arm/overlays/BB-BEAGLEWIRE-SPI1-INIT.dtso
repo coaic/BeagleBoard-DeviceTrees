@@ -2,20 +2,12 @@
 /dts-v1/;
 /plugin/;
 
-#include <dt-bindings/gpio/gpio.h>
-#include <dt-bindings/pinctrl/am33xx.h>
-
 / {
     fragment@0 {
         target = <&am33xx_pinmux>;
         __overlay__ {
             spi1_pins: spi1_pins {
-                pinctrl-single,pins = 
-                    AM33XX_PADCONF(AM335X_PIN_MCASP0_ACLKX, PIN_INPUT_PULLUP, MUX_MODE3)  /* P9_31 spi1_sclk */
-                    AM33XX_PADCONF(AM335X_PIN_MCASP0_FSX, PIN_INPUT_PULLUP, MUX_MODE3)    /* P9_29 spi1_d0 */
-                    AM33XX_PADCONF(AM335X_PIN_MCASP0_AXR0, PIN_OUTPUT_PULLUP, MUX_MODE3)  /* P9_30 spi1_d1 */
-                    AM33XX_PADCONF(AM335X_PIN_MCASP0_AHCLKR, PIN_OUTPUT_PULLUP, MUX_MODE3) /* P9_28 spi1_cs0 */
-                >;
+             pinctrl-single,pins = <0x190 0x33 0x194 0x33 0x198 0x13 0x19c 0x13>;
             };
         };
     };
