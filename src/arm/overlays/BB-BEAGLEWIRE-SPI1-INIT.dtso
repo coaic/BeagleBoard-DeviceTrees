@@ -2,15 +2,27 @@
 /dts-v1/;
 /plugin/;
 
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/am33xx.h>
+
 / {
     fragment@0 {
         target = <&am33xx_pinmux>;
         __overlay__ {
-            spi1_pins: spi1_pins {
-             pinctrl-single,pins = <0x190 0x33 0x194 0x33 0x198 0x13 0x19c 0x13>;
+            spi_gpio_pins: pinmux_spi_gpio_pins {
+                pinctrl-single,pins = <
+                    0x190 (PIN_OUTPUT | MUX_MODE7) /* P9_31 gpio2_14 SCLK */
+                    0x194 (PIN_OUTPUT | MUX_MODE7) /* P9_29 gpio2_15 MOSI */
+                    0x198 (PIN_INPUT  | MUX_MODE7) /* P9_30 gpio2_16 MISO */
+                    0x19c (PIN_OUTPUT | MUX_MODE7) /* P9_28 gpio2_17 CS */
+                >;
             };
         };
     };
+
+    /*
+     * Bitbanged SPI master
+     */
 
     fragment@1 {
         target = <&spi1>;
