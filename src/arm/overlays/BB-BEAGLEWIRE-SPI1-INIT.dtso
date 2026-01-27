@@ -3,37 +3,36 @@
 /plugin/;
 
 #include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/am33xx.h>
 
 / {
-    /*
-     * FPGA reset line (CRESET_B)
-     * No hog, no pinmux, userspace controls this
-     */
     fragment@0 {
-        target-path = "/";
+        target = <&am33xx_pinmux>;
         __overlay__ {
-            ice40_creset {
-                gpios = <&gpio2 21 GPIO_ACTIVE_LOW>; /* P9_25 */
-                line-name = "ice40_creset";
+            spi1_pins: spi1_pins {
+                pinctrl-single,pins = 
+                    AM33XX_PADCONF(AM335X_PIN_MCASP0_ACLKX, PIN_INPUT_PULLUP, MUX_MODE3)  /* P9_31 spi1_sclk */
+                    AM33XX_PADCONF(AM335X_PIN_MCASP0_FSX, PIN_INPUT_PULLUP, MUX_MODE3)    /* P9_29 spi1_d0 */
+                    AM33XX_PADCONF(AM335X_PIN_MCASP0_AXR0, PIN_OUTPUT_PULLUP, MUX_MODE3)  /* P9_30 spi1_d1 */
+                    AM33XX_PADCONF(AM335X_PIN_MCASP0_AHCLKR, PIN_OUTPUT_PULLUP, MUX_MODE3) /* P9_28 spi1_cs0 */
+                >;
             };
         };
     };
 
-    /*
-     * Use existing hardware SPI1 exactly as wired on BeagleWire
-     * Pins remain spi1_sclk / spi1_d0 / spi1_d1 / spi1_cs0
-     */
     fragment@1 {
         target = <&spi1>;
         __overlay__ {
             status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <&spi1_pins>;
 
             #address-cells = <1>;
             #size-cells = <0>;
 
             spidev@0 {
                 compatible = "rohm,dh2228fv";
-                reg = <0>;                    /* CS0 = P9_28 */
+                reg = <0>;
                 spi-max-frequency = <1000000>;
             };
         };
